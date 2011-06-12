@@ -1,0 +1,46 @@
+File-UStore version 0.03
+========================
+
+
+File-UStore  is a perl  library to  store files  on a
+filesystem using a UUID based storage around various depths of Storage.
+
+File::UStore is a library that allows users to abstract file storage using a UUID based pointer instead of File Hashes to store the file.  This is
+a critical feature for code which requires even duplicate files to get a unique identifier each time they added to a store. A Hash Storage on the
+other hand will not allow a file to be duplicated if it is stored multiple time in the store. This can cause issues in cases where a files may be
+deleted regularly as there would be no way of knowing if a second process is still using the file which the first process might be about to delete.
+
+The  current version  uses UUID Module to generate universally unique identifiers everytime a file is to be stored.
+
+The Module also provides a option to choose the folder depth at which a file is stored.  This can be changed from the default value of 3.
+Increasing depth is advisable if the Store might contain a large number of files in your use case. This helps avoid having an excessive number of
+files in any single folder.
+ 
+INSTALLATION
+
+To install this module type the following:
+
+   perl Makefile.PL
+   make
+   make test
+   make install
+
+DEPENDENCIES
+
+This module requires the following modules :
+
+  UUID
+  File::Spec
+  File::Copy
+  File::Path
+  Test::More
+
+COPYRIGHT AND LICENCE
+
+Copyright (C) 2004-2008 by Shantanu Bhadoria <shantanu.bhadoria@gmail.com>
+
+This library is  free software; you can redistribute  it and/or modify
+it under the same terms as  Perl itself, either Perl version 5.8.5 or,
+at your option, any later version of Perl 5 you may have available.
+
+

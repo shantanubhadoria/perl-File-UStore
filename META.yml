@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:                File-UStore
-version:             0.03
+version:             0.04
 abstract:            Perl extension to store files  on a filesystem using a UUID based storage
 license:             perl
 author:              

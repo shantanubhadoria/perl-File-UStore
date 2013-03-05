@@ -14,4 +14,9 @@ WriteMakefile(
       (ABSTRACT_FROM  => 'lib/File/UStore.pm', # retrieve abstract from module
        LICENSE	      => 'perl',
        AUTHOR         => 'Shantanu Bhadoria <shantanu.bhadoria@gmail.com>') : ()),
+    META_MERGE => {
+        resources => {
+            repository => 'https://github.com/dwimperl/Task-DWIM',
+        },
+    },
 );

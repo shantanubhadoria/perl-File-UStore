@@ -109,7 +109,7 @@ file in storage due to inherent character of hash based storage, while
 this is useful if a user doesn't want any duplicates occurring in a
 storage, this apparently trivial difference is risky in the use case
 where two processes upload a duplicate file to the store and both
-processes want to do file handling on this filesimultaneously, only 
+processes want to do file handling on these files simultaneously, only 
 one of the processes will be able to get a lock(deletion,manipulation 
 etc.) on the file at a time and if the first process deletes the file 
 referred to by its ID, the second process will never know what happened 

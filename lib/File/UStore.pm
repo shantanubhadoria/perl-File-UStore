@@ -1,22 +1,17 @@
 package File::UStore;
 
-use 5.006;
 use strict;
 use warnings;
 
-=head1 NAME
+# PODNAME: File::UStore 
 
-File::UStore - Perl extension to store files  on a filesystem using a non-hash UUID(Universally Unique Identifier) based randomised storage with depth of storage options.
+# ABSTRACT: UUID based File Storage Module.
 
-=head1 VERSION
+# VERSION
 
-Version 0.04
+# Dependencies
 
-=cut
-
-our $VERSION = '0.04';
-
-
+use 5.006;
 use UUID;
 use File::Copy;
 use File::Path;
@@ -39,51 +34,13 @@ our @EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );
 
 our @EXPORT = qw( );
 
-=head1 SYNOPSIS
 
-  use File::UStore;
-  my $store = new File::UStore( path => "/home/shantanu/.teststore", 
-                              prefix => "prefix_",
-                              depth  => 5
-                            );
-  
-  open( my $FH, "foo.pl" ) or die "Unable to open file ";
-  # Add a file in the store
-  my $id = $store->add(*$FH);
+=method new
 
-  # Get file handle from id. this might not work if you have too wierd a storage scheme.
-  my $handle = $store->get($id);
-  print <$handle>;
-
-  # Return the filesystem location of an id
-  my $location = $store->getPath($id);
-
-  # Remove a file by its id from the store
-  $store->remove("7d4d873e-4bf4-41a5-8696-fd6232f7bdda");
-
-=head1 DESCRIPTION
-
-File::UStore is a perl library based on File::HStore to store files on a filesystem using a UUID based randomised storage with folder depth control over storage.
-
-File::UStore is a library that allows users to abstract file storage using a UUID based pointer instead of File Hashes to store the file. This is a critical feature for code which requires even duplicate files to get a unique identifier each time they added to a store. A Hash Storage on the other hand will not allow a file to be duplicated if it is stored multiple time in the store. This can cause issues in cases where a files may be deleted regularly as there would be no way of knowing if a second process is still using the file which the first process might be about to delete.
-
-The  current version  uses UUID Module to generate universally unique identifiers everytime a file is to be stored.
-
-The Module also provides a option to choose the folder depth at which a file is stored. This can be changed from the default value of 3. Increasing depth is advisable 
-if the store might contain a large number of files in your use case. This will help to avoid having a too large number of files in any single folder.
-
-=cut
-
-=head1 SUBROUTINES/METHODS
-
-The object  oriented interface to C<File::UStore> is  described in this
-section.  
-
-The following methods are provided:
-
-=head2 new
-
-=item $store = File::UStore->new( path => "/home/shantanu/.teststore", prefix => "prefix_", depth  => 5 );
+    $store = File::UStore->new( 
+        path => "/home/shantanu/.teststore", 
+        prefix => "prefix_", depth  => 5 
+    );
 
 This constructor  returns a new C<File::UStore>  object encapsulating a
 specific store. The path specifies  where the UStore is located on the
@@ -133,14 +90,15 @@ sub new {
     return $self;
 }
 
-=head2 add
+=method add
 
-=item $store->add($filename)
+    my $id = $store->add($filename)
 
-The $filename is the file to be added in the  store. The return value
-is the id ($id) of the $filename stored. From this point on the user 
-will only be able to refer to this file using the id.
-Return undef on error. 
+The $filename is the path of the file to be added in the  store. The return value
+is the uuid ($id) of the file stored. From this point on the user 
+will only be able to refer to this file using $id.
+
+Returns undef on error. 
 
 =cut
 
@@ -173,14 +131,13 @@ sub add {
     return $uuidString;
 }
 
-=head2 remove
+=method remove
 
-=item $store->remove($id)
+    $store->remove($id)
 
-The $id is the file to be removed from the store. 
+The $id is the uuid of the file to be removed from the store. 
 
-Return false on success and undef on error.
-
+Returns false on success and undef on error.
 
 =cut
 
@@ -190,7 +147,7 @@ sub remove {
 
     my $destStoredFile;
 
-    if ( !( defined($id) ) ) { return undef; }
+    if ( !( defined($id) ) ) { return ; }
 
     my $SSubDir;
     my @tempstr = split (//,$id);
@@ -204,7 +161,7 @@ sub remove {
 
     if ( -e $destStoredFile ) {
 
-            unlink($destStoredFile) or return undef;
+            unlink($destStoredFile) or return ;
 
     }
     else {
@@ -213,13 +170,12 @@ sub remove {
 
 }
 
-=head2 get
+=method get
 
-=item $store->get($id)
+    $store->get($id)
 
-Return the file handle of the file from its id.
-
-Return undef on error.
+Returns the file handle of the file from its uuid.
+Returns undef on error.
 
 =cut
 
@@ -247,13 +203,12 @@ sub get {
     }
 }
 
-=head2 getPath
+=method getPath
 
-=item $store->getPath($id)
+    $store->getPath($id)
 
-Return the filesystem location of the file from its id.
-
-Return undef on error.
+Returns the filesystem location of the file from its uuid.
+Returns undef on error.
 
 =cut
 
@@ -291,14 +246,52 @@ sub _printPath {
 1;
 __END__
 
+=begin wikidoc 
 
-=head1 SEE ALSO
+= SYNOPSIS
 
-An Analysis of Compare-by-hash - for reasons why a UUID based storage may
-be preferred over hash based solution in certain cases.
-http://www.usenix.org/events/hotos03/tech/full_papers/henson/henson.pdf
+    use File::UStore;
+    my $store = new File::UStore( path => "/home/shantanu/.teststore", 
+        prefix => "prefix_",
+        depth  => 5
+    );
+    
+    open( my $FH, "foo.pl" ) or die "Unable to open file ";
+    # Add a file in the store
+    my $id = $store->add(*$FH);
+    # Get file handle from uuid. 
+    my $handle = $store->get($id);
+    print <$handle>;
+    
+    # Return the filesystem location from a uuid
+    my $location = $store->getPath($id);
+    
+    # Remove a file by its uuid from the store
+    $store->remove("7d4d873e-4bf4-41a5-8696-fd6232f7bdda");
 
-=head1 USE CASE FOR THIS MODULE IN LIEU OF A HASH BASED STORAGE
+=  DESCRIPTION
+
+File::UStore is a perl library based on File::HStore to store files on a filesystem using a UUID based randomised 
+storage with folder depth control over storage.File::UStore is a library that allows users to abstract file storage 
+using a UUID based pointer instead of File Hashes to store the file. This is a critical feature for code which  
+requires even duplicate files to get a unique identifier each time they are added to a store. A Hash Storage on  
+the other hand will not allow a file to be duplicated if it is stored multiple time in the same store. This can cause  
+issues in cases where files are deleted regularly as there would be no way of knowing if a second process is still 
+using the file which the first process might be about to delete.
+
+The  current version  uses UUID Module to generate universally unique identifiers everytime a file is to be stored.
+
+The Module also provides a option to choose the folder depth at which a file is stored. This can be changed from  
+the default value of 3. Increasing depth is advisable if the store might contain a large number of files in your  
+use case. This will help to avoid having a too large number of files in any single folder.
+
+= NOTES
+
+ * An Analysis of Compare-by-hash - for reasons why a UUID based storage 
+ maybe preferred over hash based solution in certain cases.
+ http://www.usenix.org/events/hotos03/tech/full_papers/henson/henson.pdf
+
+= USE CASE FOR THIS MODULE IN LIEU OF A HASH BASED STORAGE
 
 File::HStore is a similar module that
 provides File Hash based storage. However due to the nature of File
@@ -309,11 +302,12 @@ file in storage due to inherent character of hash based storage, while
 this is useful if a user doesn't want any duplicates occurring in a
 storage, this apparently trivial difference is risky in the use case
 where two processes upload a duplicate file to the store and both
-processes want to do file handling simultaneously, only one of the 
-processes will be able to get a lock(deletion,manipulation etc.) on 
-the file at a time and if the first process deletes the file referred 
-to by its ID, the second process will never know what happened to the 
-file it added. 
+processes want to do file handling on these files simultaneously, only 
+one of the processes will be able to get a lock(deletion,manipulation 
+etc.) on the file at a time and if the first process deletes the file 
+referred to by its ID, the second process will never know what happened 
+to the file it added. However in circumstances where filename based
+deduplication is desired you must use L<File::HStore> instead.
 
 Hence to serve this unique use case I wrote this module for a UUID 
 based storage solution which is not hostage to auto de-duping features 
@@ -326,68 +320,7 @@ performance for the users application. Depth of storage allows users
 to make the balance between average "number of files in a folder"
 and folder depth.
 
-=head1 AUTHOR
-
-Shantanu Bhadoria, C<< <shantanu (dot comes here) bhadoria at gmail dot com> >> L<http://www.shantanubhadoria.com>.
-
-=head1 BUGS
-
-Please report any bugs or feature requests to C<bug-file-ustore at rt.cpan.org>, or through
-the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=File-UStore>.  I will be notified, and then you'll
-automatically be notified of progress on your bug as I make changes.
-
-=head1 SUPPORT
-
-You can find documentation for this module with the perldoc command.
-
-    perldoc File::UStore
-
-You can also look for information at:
-
-=over 4
-
-=item * RT: CPAN's request tracker (report bugs here)
-
-L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=File-UStore>
-
-=item * AnnoCPAN: Annotated CPAN documentation
-
-L<http://annocpan.org/dist/File-UStore>
-
-=item * CPAN Ratings
-
-L<http://cpanratings.perl.org/d/File-UStore>
-
-=item * Search CPAN
-
-L<http://search.cpan.org/dist/File-UStore/>
-
-=back
-
-=head1 ACKNOWLEDGEMENTS
+= ACKNOWLEDGEMENTS
 
 Thanks to Alexandre Dulaunoy for the excellent File::HStore module which along with my own special need provided the idea behind this module.
 
-=head1 COPYRIGHT AND LICENSE
-
-Copyright (C) 2011 Shantanu Bhadoria  
-
-C<< <shantanu (dot comes here) bhadoria at gmail dot com> >> L<http://www.shantanubhadoria.com>
-
-This program is free software; you can redistribute it and/or modify it
-under the terms of either: the GNU General Public License as published
-by the Free Software Foundation; or the Artistic License.
-
-See http://dev.perl.org/licenses/ for more information.
-
-=head1 Dependencies 
-
-UUID
-
-File::Copy
-
-File::Path
-
-File::Spec
-
-=cut

@@ -271,7 +271,7 @@ __END__
 
 =  DESCRIPTION
 
-File::UStore is a perl library based on File::HStore to store files on a filesystem using a UUID based randomised 
+File::UStore is a perl library based on File::HStore to store files on a filesystem using a UUID based randomized 
 storage with folder depth control over storage.File::UStore is a library that allows users to abstract file storage 
 using a UUID based pointer instead of File Hashes to store the file. This is a critical feature for code which  
 requires even duplicate files to get a unique identifier each time they are added to a store. A Hash Storage on  

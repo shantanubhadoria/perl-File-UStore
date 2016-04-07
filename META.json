@@ -79,7 +79,7 @@
    "provides" : {
       "File::UStore" : {
          "file" : "lib/File/UStore.pm",
-         "version" : "0.15"
+         "version" : "0.16"
       }
    },
    "release_status" : "stable",
@@ -94,7 +94,7 @@
          "web" : "https://github.com/shantanubhadoria/perl-file-ustore"
       }
    },
-   "version" : "0.15",
+   "version" : "0.16",
    "x_contributors" : [
       "Shantanu Bhadoria <shantanu.bhadoria@gmail.com>",
       "Shantanu Bhadoria <shantanu@shantanu-M14xR2.(none)>"

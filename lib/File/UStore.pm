@@ -7,7 +7,7 @@ use warnings;
 
 # ABSTRACT: UUID based File Storage Module.
 
-our $VERSION = '0.15'; # VERSION
+our $VERSION = '0.16'; # VERSION
 
 # Dependencies
 
@@ -212,8 +212,8 @@ File::UStore - UUID based File Storage Module.
 <p>
 <img src="https://img.shields.io/badge/perl-5.10+-brightgreen.svg" alt="Requires Perl 5.10+" />
 <a href="https://travis-ci.org/shantanubhadoria/perl-File-UStore"><img src="https://api.travis-ci.org/shantanubhadoria/perl-File-UStore.svg?branch=build/master" alt="Travis status" /></a>
-<a href="http://matrix.cpantesters.org/?dist=File-UStore%200.15"><img src="https://badgedepot.code301.com/badge/cpantesters/File-UStore/0.15" alt="CPAN Testers result" /></a>
-<a href="http://cpants.cpanauthors.org/dist/File-UStore-0.15"><img src="https://badgedepot.code301.com/badge/kwalitee/File-UStore/0.15" alt="Distribution kwalitee" /></a>
+<a href="http://matrix.cpantesters.org/?dist=File-UStore%200.16"><img src="https://badgedepot.code301.com/badge/cpantesters/File-UStore/0.16" alt="CPAN Testers result" /></a>
+<a href="http://cpants.cpanauthors.org/dist/File-UStore-0.16"><img src="https://badgedepot.code301.com/badge/kwalitee/File-UStore/0.16" alt="Distribution kwalitee" /></a>
 <a href="https://gratipay.com/shantanubhadoria"><img src="https://img.shields.io/gratipay/shantanubhadoria.svg" alt="Gratipay" /></a>
 </p>
 
@@ -221,7 +221,7 @@ File::UStore - UUID based File Storage Module.
 
 =head1 VERSION
 
-version 0.15
+version 0.16
 
 =head1 SYNOPSIS
 

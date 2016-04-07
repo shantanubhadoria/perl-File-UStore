@@ -34,7 +34,7 @@ no_index:
 provides:
   File::UStore:
     file: lib/File/UStore.pm
-    version: 0.15
+    version: 0.16
 requires:
   AutoLoader: 0
   Exporter: 0
@@ -49,7 +49,7 @@ resources:
   bugtracker: https://github.com/shantanubhadoria/perl-file-ustore/issues
   homepage: https://metacpan.org/release/File-UStore
   repository: git://github.com/shantanubhadoria/perl-file-ustore.git
-version: 0.15
+version: 0.16
 x_contributors:
   - 'Shantanu Bhadoria <shantanu.bhadoria@gmail.com>'
   - 'Shantanu Bhadoria <shantanu@shantanu-M14xR2.(none)>'
